@@ -21,7 +21,7 @@ for layer in model.model.layers:
 
 prompt = "Give me a short introduction to large language model."
 model_inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-model.generate(~~
+model.generate(
     **model_inputs,
     max_new_tokens=1
 )
