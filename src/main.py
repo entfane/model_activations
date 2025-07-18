@@ -1,5 +1,6 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer, HfArgumentParser
 from dataclasses import dataclass, field
+from utils import ActivationAnalyzer
 
 
 @dataclass
@@ -19,5 +20,10 @@ if __name__ == "__main__":
     except:
         raise Exception("model does not exist, provide a huggingface model")
     
+    activation_analyzer = ActivationAnalyzer()
+    activation_analyzer.attach_forward_hooks(model)
+    input = tokenizer("some input", return_tensors="pt").to(model.device)
+    model.generate(**input, max_new_tokens = 1)
+    print(activation_analyzer.activations)
     
     
